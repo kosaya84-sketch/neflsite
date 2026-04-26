@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nefl.preset | Next-Gen Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+    <div id="password-screen" class="password-overlay">
+    <div class="pass-card">
+        <div class="lock-icon">🔒</div>
+        <h2 class="pushed-text-small">RESTRICTED</h2>
+        <p>Masukkan kunci akses untuk membuka portfolio.</p>
+        
+        <div class="input-wrapper">
+            <input type="password" id="pass-input" placeholder="••••••••">
+        </div>
+        
+        <button class="btn-main" onclick="checkPassword()">UNFOLD FABRIC</button>
+        <p id="error-msg" class="error"></p>
+    </div>
+</div>
+
+    <div class="cursor-dot"></div>
+
+    <nav class="glass-nav">
+        <div class="logo">NEFL<span>.</span></div>
+        <div class="nav-right">
+            <button id="theme-toggle" title="Ubah Warna">🎨</button>
+            <div class="menu-btn"><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="glow-text">NEFL<br>PRESET</h1>
+                <p>Membangun masa depan digital melalui kode dan estetika.</p>
+                <button class="magnetic-btn">Jelajahi Project</button>
+            </div>
+        </section>
+
+        <section class="work-showcase">
+            <div class="tactile-card" id="mainModule">
+                <div class="video-wrapper">
+                    <video id="featureVideo" muted loop playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-ui">
+                        <div class="status-tag">LIVE PREVIEW</div>
+                        <div class="progress-bar"><div class="fill"></div></div>
+                    </div>
+                </div>
+                
+                <div class="card-details">
+                    <div class="badge">New Release</div>
+                    <h2>The Big Buck Theory</h2>
+                    <p>Visualisasi interaktif menggunakan teknik dorongan kain pada permukaan digital.</p>
+                    
+                    <div class="tags">
+                        <span class="tag-pill">UI/UX</span>
+                        <span class="tag-pill">JavaScript</span>
+                        <span class="tag-pill">Motion</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-box"><h3>12+</h3><p>Projects</p></div>
+            <div class="stat-box"><h3>SMK11</h3><p>Education</p></div>
+            <div class="stat-box"><h3>2026</h3><p>Vision</p></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built by Nefl.preset &copy; 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
