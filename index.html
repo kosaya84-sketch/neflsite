@@ -3,83 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nefl.preset | Next-Gen Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Dev Portfolio & Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        body { background: #0f172a; color: white; overflow-x: hidden; }
+        .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+        .swiper-slide { background-position: center; background-size: cover; width: 300px; height: 400px; border-radius: 15px; overflow: hidden; }
+    </style>
 </head>
-<body class="dark-theme">
+<body>
 
-    <div id="password-screen" class="password-overlay">
-    <div class="pass-card">
-        <div class="lock-icon">🔒</div>
-        <h2 class="pushed-text-small">RESTRICTED</h2>
-        <p>Masukkan kunci akses untuk membuka portfolio.</p>
-        
-        <div class="input-wrapper">
-            <input type="password" id="pass-input" placeholder="••••••••">
+    <header class="fixed w-full z-50 glass px-8 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold tracking-tighter text-cyan-400">DEV.PORTFOLIO</h1>
+        <nav class="space-x-6 hidden md:block">
+            <a href="#home" class="hover:text-cyan-400 transition">Home</a>
+            <a href="#store" class="hover:text-cyan-400 transition">Store</a>
+            <button onclick="openAdmin()" class="bg-cyan-600 px-4 py-1 rounded-full text-sm">Admin</button>
+        </nav>
+    </header>
+
+    <section id="home" class="h-screen flex flex-col justify-center items-center text-center px-4">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">Creative Developer</h2>
+        <p class="text-gray-400 max-w-xl">Membangun solusi digital masa depan dengan estetika modern dan performa tinggi.</p>
+    </section>
+
+    <section id="store" class="py-20 bg-slate-900">
+        <div class="text-center mb-10">
+            <h3 class="text-3xl font-bold">Product Store</h3>
+            <p class="text-gray-500">Pilih layanan terbaik untuk proyekmu</p>
         </div>
-        
-        <button class="btn-main" onclick="checkPassword()">UNFOLD FABRIC</button>
-        <p id="error-msg" class="error"></p>
+
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper" id="product-list">
+                </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <div id="modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 p-4">
+        <div class="glass p-8 rounded-2xl max-w-md w-full">
+            <h4 class="text-xl font-bold mb-2" id="modal-title">Konfirmasi Pembelian</h4>
+            <p id="modal-desc" class="text-gray-400 mb-6 text-sm"></p>
+            <input type="number" id="wa-number" placeholder="Masukkan No WhatsApp (contoh: 0812...)" class="w-full p-3 rounded bg-slate-800 border border-slate-700 mb-4 focus:outline-none focus:border-cyan-400">
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-2 bg-slate-700 rounded-lg">Batal</button>
+                <button onclick="confirmPurchase()" class="flex-1 py-2 bg-cyan-600 rounded-lg font-bold">Konfirmasi</button>
+            </div>
+        </div>
     </div>
-</div>
 
-    <div class="cursor-dot"></div>
-
-    <nav class="glass-nav">
-        <div class="logo">NEFL<span>.</span></div>
-        <div class="nav-right">
-            <button id="theme-toggle" title="Ubah Warna">🎨</button>
-            <div class="menu-btn"><span></span></div>
+    <div id="admin-panel" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-slate-950 p-4">
+        <div class="bg-white text-slate-900 p-8 rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h4 class="text-2xl font-bold">Admin - Daftar WA Pelanggan</h4>
+                <button onclick="closeAdmin()" class="text-red-500 font-bold">Tutup</button>
+            </div>
+            <ul id="admin-list" class="divide-y divide-gray-200">
+                </ul>
         </div>
-    </nav>
+    </div>
 
-    <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="glow-text">NEFL<br>PRESET</h1>
-                <p>Membangun masa depan digital melalui kode dan estetika.</p>
-                <button class="magnetic-btn">Jelajahi Project</button>
-            </div>
-        </section>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Data Produk
+        let products = [
+            { id: 1, name: "Alight Motion 1thn", price: "Rp 15.000", label: "PROMO", link: "https://wa.me/6283144677714?text=permisi+beli+am+premnya+mas+nepel", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400" },
+            { id: 2, name: "Youtube Prem 1bln", price: "Rp 25.000", label: "HOT PROMO", link: "https://wa.me/6283144677714?text=permisi+beli+yt+premnya+mas+nepel", img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=400" },
+            { id: 3, name: "Spotify Prem 1bln", price: "Rp 10.000", label: "PROMO", link: "https://wa.me/6283144677714?text=permisi+beli+spotify+premnya+mas+nepel", img: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=400" }
+        ];
 
-        <section class="work-showcase">
-            <div class="tactile-card" id="mainModule">
-                <div class="video-wrapper">
-                    <video id="featureVideo" muted loop playsinline>
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-ui">
-                        <div class="status-tag">LIVE PREVIEW</div>
-                        <div class="progress-bar"><div class="fill"></div></div>
-                    </div>
+        let selectedProduct = null;
+
+        // Inisialisasi Swiper 3D
+        function initSwiper() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = products.map(p => `
+                <div class="swiper-slide glass flex flex-col p-4 cursor-pointer" onclick="openModal(${p.id})">
+                    <img src="${p.img}" class="w-full h-48 object-cover rounded-xl mb-4">
+                    <span class="${p.label === 'HOT PROMO' ? 'bg-red-600' : 'bg-cyan-600'} text-[10px] w-fit px-2 py-1 rounded mb-2">${p.label}</span>
+                    <h5 class="text-xl font-bold">${p.name}</h5>
+                    <p class="text-cyan-400 font-mono mt-auto">${p.price}</p>
                 </div>
-                
-                <div class="card-details">
-                    <div class="badge">New Release</div>
-                    <h2>The Big Buck Theory</h2>
-                    <p>Visualisasi interaktif menggunakan teknik dorongan kain pada permukaan digital.</p>
-                    
-                    <div class="tags">
-                        <span class="tag-pill">UI/UX</span>
-                        <span class="tag-pill">JavaScript</span>
-                        <span class="tag-pill">Motion</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+            `).join('');
 
-        <section class="stats-grid">
-            <div class="stat-box"><h3>12+</h3><p>Projects</p></div>
-            <div class="stat-box"><h3>SMK11</h3><p>Education</p></div>
-            <div class="stat-box"><h3>2026</h3><p>Vision</p></div>
-        </section>
-    </main>
+            new Swiper(".mySwiper", {
+                effect: "coverflow",
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: "auto",
+                coverflowEffect: { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true },
+                pagination: { el: ".swiper-pagination" },
+            });
+        }
 
-    <footer>
-        <p>Built by Nefl.preset &copy; 2026</p>
-    </footer>
+        // Logika Modal & Konfirmasi
+        function openModal(id) {
+            selectedProduct = products.find(p => p.id === id);
+            document.getElementById('modal-title').innerText = `Beli ${selectedProduct.name}?`;
+            document.getElementById('modal-desc').innerText = `Produk ini seharga ${selectedProduct.price}. Masukkan WhatsApp kamu untuk melanjutkan ke link pembayaran.`;
+            document.getElementById('modal').classList.remove('hidden');
+        }
 
-    <script src="script.js"></script>
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('wa-number').value = '';
+        }
+
+        function confirmPurchase() {
+            const wa = document.getElementById('wa-number').value;
+            if(!wa) return alert("Masukkan nomor WhatsApp!");
+
+            // Simpan ke 'Database' (LocalStorage)
+            let logs = JSON.parse(localStorage.getItem('admin_logs') || "[]");
+            logs.push({ wa: wa, product: selectedProduct.name, time: new Date().toLocaleString() });
+            localStorage.setItem('admin_logs', JSON.stringify(logs));
+
+            // Jika HOT PROMO, hapus dari list
+            if(selectedProduct.label === "HOT PROMO") {
+                products = products.filter(p => p.id !== selectedProduct.id);
+            }
+
+            // Redirect ke link
+            const link = selectedProduct.link;
+            closeModal();
+            initSwiper(); // Re-render slide
+            window.open(link, '_blank');
+        }
+
+        // Admin Panel Logic
+        function openAdmin() {
+            const pass = prompt("Masukkan Password Admin:");
+            if(pass === "12345") { // Password default
+                const logs = JSON.parse(localStorage.getItem('admin_logs') || "[]");
+                const list = document.getElementById('admin-list');
+                list.innerHTML = logs.map(l => `
+                    <li class="py-3">
+                        <p class="font-bold text-cyan-700">${l.wa}</p>
+                        <p class="text-sm text-gray-500">${l.product} - ${l.time}</p>
+                    </li>
+                `).join('') || '<p class="text-gray-400">Belum ada data.</p>';
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else {
+                alert("Password Salah!");
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
+        window.onload = initSwiper;
+    </script>
 </body>
 </html>
